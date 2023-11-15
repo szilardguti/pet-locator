@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Elveszett házikedvenc kereső</title>
+    <title>Pet Locator</title>
 
     <!--LEAFLET-->
     <link
@@ -48,15 +48,16 @@
         type="button"
         class="btn btn-primary"
         data-toggle="modal"
-        data-target="#exampleModal"
+        data-target="#modal"
+        id="addButton"
       >
-        Launch demo modal
+        Add
       </button>
       <button
         type="button"
         class="btn btn-primary"
         data-toggle="modal"
-        data-target="#exampleModal"
+        data-target="#modal"
         id="searchButton"
       >
         Search
@@ -70,26 +71,28 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="modal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="modalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="modalLabel">Modal title</h5>
             <button
               type="button"
               class="close"
               data-dismiss="modal"
               aria-label="Close"
+              id="exitButton"
             >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body" id="modalBody">
+            <!--SEARCH MODAL-->
             <div id="searchModal" class="hidden">
               <input
                 type="range"
@@ -101,16 +104,25 @@
               />
               <label id="fPrice"></label>
             </div>
+            <!-- END OF SEARCH MODAL-->
+            <!-- ADD MODAL-->
+            <div id="addModal" class="hidden">
+              <p>add modal goes here</p>
+            </div>
+            <!-- END OF ADD MODAL-->
           </div>
           <div class="modal-footer">
             <button
               type="button"
               class="btn btn-secondary"
               data-dismiss="modal"
+              id="closeButton"
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary" id="saveButton">
+              Save changes
+            </button>
           </div>
         </div>
       </div>

@@ -72,7 +72,7 @@ interactiveMarker
   .bindPopup("This is your interactive marker that follows your cursor!")
   .openPopup();
 
-// SETUP SEARCH CIRCLE
+// SETUP SEARCH
 var searchCircle = L.circle(interactiveMarker.getLatLng(), {
   color: "red",
   fillColor: "#f03",
@@ -85,6 +85,10 @@ var searchCircleRadiusScale = document.getElementById(
 );
 var searchButton = document.getElementById("searchButton");
 var searchModal = document.getElementById("searchModal");
+
+// SETUP ADD
+var addModal = document.getElementById("addModal");
+var addButton = document.getElementById("addButton");
 
 // FUNCTIONS
 function onMapClick(e) {
@@ -117,12 +121,24 @@ function changeSearchCircleSize() {
   searchCircle.setRadius(searchCircleRadius / 2);
 }
 
-function searchButtonClick() {
+function searchButtonFunc() {
+  addModal.classList.add("hidden");
   searchModal.classList.remove("hidden");
+}
+
+function addButtonFunc() {
+  searchModal.classList.add("hidden");
+  addModal.classList.remove("hidden");
 }
 
 // BINDINGS
 map.on("click", onMapClick);
 interactiveMarker.on("moveend", onMarkerMoveEnd);
 searchCircleRadiusScale.oninput = changeSearchCircleSize;
-searchButton.onclick = searchButtonClick;
+searchButton.onclick = searchButtonFunc;
+addButton.onclick = addButtonFunc;
+
+$("#modal").on("hide.bs.modal", function (e) {
+  var tmpid = $(document.activeElement).attr("id");
+  alert(tmpid);
+});
