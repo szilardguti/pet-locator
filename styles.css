@@ -37,7 +37,8 @@ html {
 }
 
 #map {
-  height: 700px;
+  margin-top: 1rem;
+  height: 650px;
   width: 100%;
 }
 

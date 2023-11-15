@@ -28,7 +28,14 @@ var satellite = new L.TileLayer(esriAerialUrl, {
 
 // SETUP VARIABLES
 var searchCircleRadius = 1000;
+var activeMethod = "";
+const addMethod = "Add";
+const searchMethod = "Search";
+
+// SETUP MODAL
+var modal = document.getElementById("modal");
 var modalBody = document.getElementById("modalBody");
+var saveButton = document.getElementById("saveButton");
 
 // SETUP MARKER GROUPS
 var catMarkers = L.layerGroup();
@@ -76,7 +83,8 @@ interactiveMarker
 var searchCircle = L.circle(interactiveMarker.getLatLng(), {
   color: "red",
   fillColor: "#f03",
-  fillOpacity: 0.5,
+  opacity: 0,
+  fillOpacity: 0,
   radius: searchCircleRadius,
 }).addTo(map);
 
@@ -96,7 +104,6 @@ function onMapClick(e) {
 
   interactiveMarker
     .setLatLng(position)
-    .setIcon(questionIcon)
     .getPopup()
     .setContent("You clicked the map at " + e.latlng.toString())
     .openOn(map);
@@ -108,7 +115,6 @@ function onMarkerMoveEnd(e) {
   var position = interactiveMarker.getLatLng();
 
   interactiveMarker
-    .setIcon(defaultIcon)
     .getPopup()
     .setContent("You dragged the marker to " + position.toString())
     .openOn(map);
@@ -124,11 +130,50 @@ function changeSearchCircleSize() {
 function searchButtonFunc() {
   addModal.classList.add("hidden");
   searchModal.classList.remove("hidden");
+
+  saveButton.innerText = searchMethod;
+  activeMethod = searchMethod;
+  showSearchCircle();
 }
 
 function addButtonFunc() {
   searchModal.classList.add("hidden");
   addModal.classList.remove("hidden");
+
+  saveButton.innerText = addMethod;
+  activeMethod = addMethod;
+}
+
+function saveButtonFunc() {
+  if (addMethod === activeMethod) {
+    alert("adding");
+  } else if (searchMethod === activeMethod) {
+    alert("searching");
+  }
+}
+
+function modalClosed(e) {
+  var buttonId = $(document.activeElement).attr("id");
+  if (buttonId === "closeButton") {
+    hideSearchCircle();
+  }
+}
+
+function showSearchCircle() {
+  searchCircle.setStyle({
+    opacity: 1,
+    fillOpacity: 0.5,
+  });
+  interactiveMarker.setIcon(questionIcon);
+}
+
+function hideSearchCircle() {
+  searchCircle.setStyle({
+    opacity: 0,
+    fillOpacity: 0,
+  });
+  interactiveMarker.setIcon(defaultIcon);
+  activeMethod = "";
 }
 
 // BINDINGS
@@ -137,8 +182,5 @@ interactiveMarker.on("moveend", onMarkerMoveEnd);
 searchCircleRadiusScale.oninput = changeSearchCircleSize;
 searchButton.onclick = searchButtonFunc;
 addButton.onclick = addButtonFunc;
-
-$("#modal").on("hide.bs.modal", function (e) {
-  var tmpid = $(document.activeElement).attr("id");
-  alert(tmpid);
-});
+saveButton.onclick = saveButtonFunc;
+modal.hide = modalClosed;
