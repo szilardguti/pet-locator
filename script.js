@@ -36,6 +36,7 @@ const searchMethod = "Search";
 var modal = document.getElementById("modal");
 var modalBody = document.getElementById("modalBody");
 var saveButton = document.getElementById("saveButton");
+var modalLabel = document.getElementById("modalLabel");
 
 // SETUP MARKER GROUPS
 var catMarkers = L.layerGroup();
@@ -61,8 +62,8 @@ var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 var BaseIcon = L.Icon.extend({
   options: {
     iconSize: [50, 60],
-    iconAnchor: [24, 65],
-    popupAnchor: [2, -60],
+    iconAnchor: [24, 60],
+    popupAnchor: [2, -55],
   },
 });
 var defaultIcon = new BaseIcon({ iconUrl: "pics/down-arrow.png" });
@@ -130,6 +131,7 @@ function changeSearchCircleSize() {
 function searchButtonFunc() {
   addModal.classList.add("hidden");
   searchModal.classList.remove("hidden");
+  modalLabel.innerHTML = "Search in the area";
 
   saveButton.innerText = searchMethod;
   activeMethod = searchMethod;
@@ -137,8 +139,10 @@ function searchButtonFunc() {
 }
 
 function addButtonFunc() {
+  hideSearchCircle();
   searchModal.classList.add("hidden");
   addModal.classList.remove("hidden");
+  modalLabel.innerHTML = "Add marker to the map";
 
   saveButton.innerText = addMethod;
   activeMethod = addMethod;
