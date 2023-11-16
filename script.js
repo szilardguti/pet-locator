@@ -150,9 +150,11 @@ function addButtonFunc() {
 
 function saveButtonFunc() {
   if (addMethod === activeMethod) {
-    alert("adding");
+    addMarker();
   } else if (searchMethod === activeMethod) {
     alert("searching");
+  } else {
+    alert("Error: no active method!");
   }
 }
 
@@ -178,6 +180,24 @@ function hideSearchCircle() {
   });
   interactiveMarker.setIcon(defaultIcon);
   activeMethod = "";
+}
+
+function addMarker() {
+  const newMarker = L.marker(interactiveMarker.getLatLng());
+
+  var catRadio = document.getElementById("catRadio");
+  var dogRadio = document.getElementById("dogRadio");
+  if (dogRadio.checked) {
+    newMarker.setIcon(dogIcon);
+    dogMarkers.addLayer(newMarker);
+  } else if (catRadio.checked) {
+    newMarker.setIcon(catIcon);
+    catMarkers.addLayer(newMarker);
+  } else {
+    alert("Error: no type radio button checked!");
+  }
+
+  //newMarker.addTo(map);
 }
 
 // BINDINGS
