@@ -55,3 +55,7 @@ html {
 .hidden {
   display: none;
 }
+
+.form-block {
+  margin-top: 1rem;
+}

@@ -27,7 +27,7 @@ var satellite = new L.TileLayer(esriAerialUrl, {
 });
 
 // SETUP VARIABLES
-var searchCircleRadius = 1000;
+var searchCircleRadius = 500;
 var activeMethod = "";
 const addMethod = "Add";
 const searchMethod = "Search";
@@ -103,11 +103,10 @@ var addButton = document.getElementById("addButton");
 function onMapClick(e) {
   var position = e.latlng;
 
-  interactiveMarker
-    .setLatLng(position)
-    .getPopup()
-    .setContent("You clicked the map at " + e.latlng.toString())
-    .openOn(map);
+  interactiveMarker.setLatLng(position);
+  // .getPopup()
+  // .setContent("You clicked the map at " + e.latlng.toString())
+  // .openOn(map);
 
   searchCircle.setLatLng(position);
 }
@@ -115,10 +114,10 @@ function onMapClick(e) {
 function onMarkerMoveEnd(e) {
   var position = interactiveMarker.getLatLng();
 
-  interactiveMarker
-    .getPopup()
-    .setContent("You dragged the marker to " + position.toString())
-    .openOn(map);
+  // interactiveMarker;
+  // .getPopup()
+  // .setContent("You dragged the marker to " + position.toString())
+  // .openOn(map);
 
   searchCircle.setLatLng(position);
 }
@@ -156,6 +155,8 @@ function saveButtonFunc() {
   } else {
     alert("Error: no active method!");
   }
+
+  $("#modal").modal("hide");
 }
 
 function modalClosed(e) {
@@ -185,6 +186,7 @@ function hideSearchCircle() {
 function addMarker() {
   const newMarker = L.marker(interactiveMarker.getLatLng());
 
+  // handle type
   var catRadio = document.getElementById("catRadio");
   var dogRadio = document.getElementById("dogRadio");
   if (dogRadio.checked) {
@@ -197,7 +199,9 @@ function addMarker() {
     alert("Error: no type radio button checked!");
   }
 
-  //newMarker.addTo(map);
+  // handle age
+  var selectedAge = $("#ageSelect").val();
+  alert(selectedAge);
 }
 
 // BINDINGS
