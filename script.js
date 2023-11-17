@@ -189,12 +189,15 @@ function addMarker() {
   // handle type
   var catRadio = document.getElementById("catRadio");
   var dogRadio = document.getElementById("dogRadio");
+  var typeString = "";
   if (dogRadio.checked) {
     newMarker.setIcon(dogIcon);
     dogMarkers.addLayer(newMarker);
+    typeString = "Dog";
   } else if (catRadio.checked) {
     newMarker.setIcon(catIcon);
     catMarkers.addLayer(newMarker);
+    typeString = "Cat";
   } else {
     alert("Error: no type radio button checked!");
   }
@@ -204,6 +207,22 @@ function addMarker() {
 
   // handle description
   var description = document.getElementById("descrInput").value;
+
+  newMarker.bindPopup(getPopUpMessage(typeString, selectedAge, description));
+}
+
+function getPopUpMessage(typeString, selectedAge, description) {
+  return (
+    "<p><b>Type: </b>" +
+    typeString +
+    "</p>" +
+    "<p><b>Age: </b>" +
+    selectedAge +
+    "</p>" +
+    '<p style="word-wrap: break-word"><b>Description: </b>' +
+    description +
+    "</p>"
+  );
 }
 
 // BINDINGS
