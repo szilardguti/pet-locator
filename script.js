@@ -201,7 +201,9 @@ function addMarker() {
 
   // handle age
   var selectedAge = $("#ageSelect").val();
-  alert(selectedAge);
+
+  // handle description
+  var description = document.getElementById("descrInput").value;
 }
 
 // BINDINGS
