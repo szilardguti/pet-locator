@@ -42,6 +42,22 @@ var modalLabel = document.getElementById("modalLabel");
 var catMarkers = L.layerGroup();
 var dogMarkers = L.layerGroup();
 
+// ICONS
+var BaseIcon = L.Icon.extend({
+  options: {
+    iconSize: [50, 60],
+    iconAnchor: [24, 60],
+    popupAnchor: [2, -55],
+  },
+});
+var defaultIcon = new BaseIcon({ iconUrl: "pics/down-arrow.png" });
+var catIcon = new BaseIcon({ iconUrl: "pics/cat.png" });
+var dogIcon = new BaseIcon({ iconUrl: "pics/dog.png" });
+var questionIcon = new BaseIcon({ iconUrl: "pics/question-mark.png" });
+
+// GET DATA
+loadMarkers();
+
 // SETUP MAP
 var map = L.map("map", {
   center: [47.5534, 21.6236],
@@ -57,19 +73,6 @@ var baseMaps = {
 var overlayMaps = { "Macska jelölők": catMarkers, "Kutya jelölők": dogMarkers };
 
 var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-
-// ICONS
-var BaseIcon = L.Icon.extend({
-  options: {
-    iconSize: [50, 60],
-    iconAnchor: [24, 60],
-    popupAnchor: [2, -55],
-  },
-});
-var defaultIcon = new BaseIcon({ iconUrl: "pics/down-arrow.png" });
-var catIcon = new BaseIcon({ iconUrl: "pics/cat.png" });
-var dogIcon = new BaseIcon({ iconUrl: "pics/dog.png" });
-var questionIcon = new BaseIcon({ iconUrl: "pics/question-mark.png" });
 
 // INTERACTIVE MARKER
 var interactiveMarker = L.marker([47.5534, 21.6236], {
@@ -237,6 +240,7 @@ function saveMarkersByLayer(markerLayerGroup, apiEnd) {
   markerLayerGroup.eachLayer((marker) => {
     var markerGeoJSON = marker.toGeoJSON();
 
+    markerGeoJSON.geometry.coordinates = marker.getLatLng();
     markerGeoJSON.properties.popupContent = marker.getPopup().getContent();
     geoJSONData.features.push(markerGeoJSON);
   });
@@ -254,6 +258,39 @@ function saveMarkersByLayer(markerLayerGroup, apiEnd) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       console.log(apiEnd + " data sent successfully!");
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+async function loadMarkers() {
+  await loadMarkersByLayer(catMarkers, "cats", catIcon);
+  await loadMarkersByLayer(dogMarkers, "dogs", dogIcon);
+}
+
+async function loadMarkersByLayer(markerLayerGroup, apiEnd, correctIcon) {
+  fetch("http://localhost:3000/api/" + apiEnd, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) =>
+      data.features.forEach((feature) => {
+        const coordinates = feature.geometry.coordinates;
+        const popupContent = feature.properties.popupContent;
+
+        var marker = L.marker(coordinates, { icon: correctIcon }).bindPopup(
+          popupContent.toString()
+        );
+        markerLayerGroup.addLayer(marker);
+      })
+    )
+    .then((response) => {
+      console.log(apiEnd + " data loaded successfully!");
     })
     .catch((error) => {
       console.error("Error:", error);
