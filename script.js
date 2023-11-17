@@ -209,6 +209,8 @@ function addMarker() {
   var description = document.getElementById("descrInput").value;
 
   newMarker.bindPopup(getPopUpMessage(typeString, selectedAge, description));
+
+  saveMarkers();
 }
 
 function getPopUpMessage(typeString, selectedAge, description) {
@@ -223,6 +225,32 @@ function getPopUpMessage(typeString, selectedAge, description) {
     description +
     "</p>"
   );
+}
+
+function saveMarkers() {
+  saveCatMarkers();
+}
+
+function saveCatMarkers() {
+  var geoJSONData = catMarkers.toGeoJSON();
+
+  fetch("http://localhost:3000/api/cats", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(geoJSONData),
+    credentials: "same-origin",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      console.log("Cat data sent successfully!");
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 // BINDINGS

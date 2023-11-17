@@ -1,13 +1,15 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 var fs = require("fs");
 
 const app = express();
-const dogFilePath = "../resources/dogs.geojson";
-const catFilePath = "../resources/cats.geojson";
+const dogFilePath = "./resources/dogs.geojson";
+const catFilePath = "./resources/cats.geojson";
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post("/api/dogs", (req, res) => {
   const jsonData = req.body;
