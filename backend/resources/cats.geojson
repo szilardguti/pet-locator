@@ -1,1 +1,1 @@
-{"type":"FeatureCollection","features":[{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[21.6236,47.5534]}}]}
+{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"popupContent":"<p><b>Type: </b>Cat</p><p><b>Age: </b>Adult</p><p style=\"word-wrap: break-word\"><b>Description: </b>cinya1</p>"},"geometry":{"type":"Point","coordinates":[21.536105,47.532965]}}]}

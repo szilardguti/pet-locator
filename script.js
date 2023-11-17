@@ -228,13 +228,20 @@ function getPopUpMessage(typeString, selectedAge, description) {
 }
 
 function saveMarkers() {
-  saveCatMarkers();
+  saveMarkersByLayer(catMarkers, "cats");
+  saveMarkersByLayer(dogMarkers, "dogs");
 }
 
-function saveCatMarkers() {
-  var geoJSONData = catMarkers.toGeoJSON();
+function saveMarkersByLayer(markerLayerGroup, apiEnd) {
+  var geoJSONData = { type: "FeatureCollection", features: [] };
+  markerLayerGroup.eachLayer((marker) => {
+    var markerGeoJSON = marker.toGeoJSON();
 
-  fetch("http://localhost:3000/api/cats", {
+    markerGeoJSON.properties.popupContent = marker.getPopup().getContent();
+    geoJSONData.features.push(markerGeoJSON);
+  });
+
+  fetch("http://localhost:3000/api/" + apiEnd, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -246,7 +253,7 @@ function saveCatMarkers() {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      console.log("Cat data sent successfully!");
+      console.log(apiEnd + " data sent successfully!");
     })
     .catch((error) => {
       console.error("Error:", error);
