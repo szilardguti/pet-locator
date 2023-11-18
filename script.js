@@ -26,6 +26,8 @@ var satellite = new L.TileLayer(esriAerialUrl, {
   attribution: esriAerialAttrib,
 });
 
+setRandomHeaderImage();
+
 // SETUP VARIABLES
 var searchCircleRadius = 500;
 var activeMethod = "";
@@ -295,6 +297,15 @@ async function loadMarkersByLayer(markerLayerGroup, apiEnd, correctIcon) {
     .catch((error) => {
       console.error("Error:", error);
     });
+}
+
+function setRandomHeaderImage() {
+  var headerImage = document.getElementById("header-img");
+  if (Math.random() < 0.5) {
+    headerImage.src = "pics/cat.png";
+  } else {
+    headerImage.src = "pics/dog.png";
+  }
 }
 
 // BINDINGS
