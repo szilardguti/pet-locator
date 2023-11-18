@@ -116,6 +116,8 @@ var imageOverlay = L.imageOverlay(imageOverlayUrl, imageOverlayPosition, {
   alt: imageOverlayAltText,
 }).addTo(map);
 
+var imageOverlayButton = document.getElementById("showImageOverlayButton");
+
 // FUNCTIONS
 function onMapClick(e) {
   var position = e.latlng;
@@ -351,11 +353,16 @@ function countAndOpenPopupOnMarkers(markerLayerGroup) {
   return foundCount;
 }
 
+function showImageOverlay() {
+  map.setView([47.530968, 21.636144], 20);
+}
+
 // BINDINGS
 map.on("click", onMapClick);
 interactiveMarker.on("moveend", onMarkerMoveEnd);
 searchCircleRadiusScale.oninput = changeSearchCircleSize;
 searchButton.onclick = searchButtonFunc;
 addButton.onclick = addButtonFunc;
+imageOverlayButton.onclick = showImageOverlay;
 saveButton.onclick = saveButtonFunc;
 modal.hide = modalClosed;
