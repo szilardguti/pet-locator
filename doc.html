@@ -1,0 +1,59 @@
+<h1 id="leaflet-beadandó-projekt-pet-locator">Leaflet beadandó projekt:
+Pet-Locator</h1>
+<h2 id="futtatás">Futtatás:</h2>
+<h3 id="a-projekt-futtatásához-szükséges-eszközök">A projekt
+futtatásához szükséges eszközök:</h3>
+<ul>
+<li>npm (https://www.npmjs.com/package/npm)</li>
+<li>nodejs (https://nodejs.org/en)</li>
+</ul>
+<h3 id="futtatás-menete">Futtatás menete:</h3>
+<ol type="1">
+<li>pet-locator/backend mappába navigálás</li>
+<li>npm i</li>
+<li>npm start</li>
+<li>pet-locator/index.html megnyitása</li>
+</ol>
+<h2 id="a-projekt-leírása">A projekt leírása:</h2>
+<p>Régóta szeretnék egy webalkalmazást csináli, ami az elveszett
+háziállatok keresésését segíti. Ezzel a projekttel egy “alfa” verziót
+szerettem volna létrehozni.<br />
+Egyrészt új elkóborolt állatok felvivését teszi lehetővé jelölőkkel,
+másrészt azokon “keresést” hajthatunk végre, ami most csak egy adott
+területre szűkíthető. Amennyiben tovább vinném ezt a projektet, érdemes
+lenne keresésést kritériumokra is kiterjeszteni (cica, öreg, barna, …).
+Ezen kívül rengeteg más funkciót is el tudok képzelni, amivel bővíteni
+lehetne, mint például képek feltöltésének lehetősége.</p>
+<h2 id="funkcionalitások-magyarázása">Funkcionalitások magyarázása:</h2>
+<ul>
+<li><strong>Interaktív jelölő</strong>: A felhasználó kattintásait
+követő, húzva is mozgatható jelölő. Ez teszi lehetővé a többi
+funkcionalitás működését, ezzel tehet tetszőleges helyre jelölőt a
+felhasználó, valamit a keresés középpontja is ez.</li>
+<li><strong>Jelölő hozzáadása</strong>: Az “Add” gombra kattintva egy
+felugró ablakban adhatjuk meg a megtalált háziállat adatait. Ezek után a
+jelölő mentésre kerül a lokálisan futó backend alkalmazáson keresztül
+egy geoJSON állományba. A térkép betöltésekor szintén a backend
+alkalmazásból olvasódnak be ezek a hozzáadott jelölők!</li>
+<li><strong>Keresés</strong>: A mostani keresés limitált, amennyiben a
+“kereső körön” beül tartózkodik egy jelölő, annak megnyílik a bubija. A
+kereső kör a “Cancel” gombbal tüntethető el. A rétegek kezelése
+befolyásolja a keresési eredményeket!</li>
+<li><strong>Image Overlay megmutatás</strong>: Megmutatja a
+teljesítséhez szükséges átfedő képet a térképen.</li>
+</ul>
+<h2 id="források">Források</h2>
+<h3 id="kódrészletek">Kódrészletek:</h3>
+<ul>
+<li>Modal: https://getbootstrap.com/docs/4.3/components/modal/</li>
+<li>Slider:
+https://www.encodedna.com/html5/howto-read-values-from-html5-input-type-range-using-javascript.htm</li>
+<li>Backend: https://intellipaat.com/blog/rest-api-with-node-js/</li>
+</ul>
+<h3 id="képek">Képek:</h3>
+<ul>
+<li>Cat icon: https://adioma.com/icons/cat</li>
+<li>Dog icon: https://adioma.com/icons/dog</li>
+<li>kérdőjel icon: https://adioma.com/icons/question-mark</li>
+<li>arrow icon: https://adioma.com/icons/down-arrow</li>
+</ul>
