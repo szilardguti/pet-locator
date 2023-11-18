@@ -104,6 +104,18 @@ var searchModal = document.getElementById("searchModal");
 var addModal = document.getElementById("addModal");
 var addButton = document.getElementById("addButton");
 
+// SETUP IMAGE OVERLAY
+var imageOverlayPosition = [
+  [47.531042, 21.636004],
+  [47.530892, 21.636294],
+];
+var imageOverlayUrl = "pics/macskavezo.jfif";
+var imageOverlayAltText = "Coffee shop with rescued cats";
+var imageOverlay = L.imageOverlay(imageOverlayUrl, imageOverlayPosition, {
+  opacity: 0.8,
+  alt: imageOverlayAltText,
+}).addTo(map);
+
 // FUNCTIONS
 function onMapClick(e) {
   var position = e.latlng;
@@ -321,7 +333,7 @@ function searchMarkers() {
   }
 
   if (foundCount === 0) {
-    alert("Didnt find any lost pet in this area!");
+    alert("Didn't find any lost pet in this area!");
   }
 }
 
