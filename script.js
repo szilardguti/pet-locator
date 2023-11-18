@@ -99,6 +99,7 @@ var searchCircleRadiusScale = document.getElementById(
 );
 var searchButton = document.getElementById("searchButton");
 var searchModal = document.getElementById("searchModal");
+var searchModalLabel = document.getElementById("radiusLabel");
 
 // SETUP ADD
 var addModal = document.getElementById("addModal");
@@ -144,6 +145,7 @@ function onMarkerMoveEnd(e) {
 function changeSearchCircleSize() {
   searchCircleRadius = searchCircleRadiusScale.value;
   searchCircle.setRadius(searchCircleRadius);
+  searchModalLabel.innerHTML = "radius in meters: " + searchCircleRadius + "m";
 }
 
 function searchButtonFunc() {
