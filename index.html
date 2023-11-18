@@ -98,15 +98,20 @@
           <div class="modal-body" id="modalBody">
             <!--SEARCH MODAL-->
             <div id="searchModal" class="hidden">
-              <input
-                type="range"
-                id="searchCircleRadiusScale"
-                value="1000"
-                step="10"
-                min="200"
-                max="5000"
-              />
-              <label id="radiusLabel"></label>
+              <p class="h6">
+                Adjust the search radius on the scale! (200m to 5km)
+              </p>
+              <div class="form-block">
+                <input
+                  type="range"
+                  id="searchCircleRadiusScale"
+                  value="1000"
+                  step="10"
+                  min="200"
+                  max="5000"
+                />
+                <label id="radiusLabel"></label>
+              </div>
             </div>
             <!-- END OF SEARCH MODAL-->
             <!-- ADD MODAL-->
@@ -160,13 +165,13 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn btn-secondary"
+              class="btn btn-danger"
               data-dismiss="modal"
               id="closeButton"
             >
-              Close
+              Cancel
             </button>
-            <button type="button" class="btn btn-primary" id="saveButton">
+            <button type="button" class="btn btn-success" id="saveButton">
               Save changes
             </button>
           </div>

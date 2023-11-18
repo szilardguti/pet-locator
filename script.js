@@ -29,7 +29,7 @@ var satellite = new L.TileLayer(esriAerialUrl, {
 setRandomHeaderImage();
 
 // SETUP VARIABLES
-var searchCircleRadius = 500;
+var searchCircleRadius = 1000;
 var activeMethod = "";
 const addMethod = "Add";
 const searchMethod = "Search";
@@ -87,8 +87,8 @@ interactiveMarker
 
 // SETUP SEARCH
 var searchCircle = L.circle(interactiveMarker.getLatLng(), {
-  color: "red",
-  fillColor: "#f03",
+  color: "green",
+  fillColor: "green",
   opacity: 0,
   fillOpacity: 0,
   radius: searchCircleRadius,
@@ -129,7 +129,7 @@ function onMarkerMoveEnd(e) {
 
 function changeSearchCircleSize() {
   searchCircleRadius = searchCircleRadiusScale.value;
-  searchCircle.setRadius(searchCircleRadius / 2);
+  searchCircle.setRadius(searchCircleRadius);
 }
 
 function searchButtonFunc() {
@@ -156,7 +156,7 @@ function saveButtonFunc() {
   if (addMethod === activeMethod) {
     addMarker();
   } else if (searchMethod === activeMethod) {
-    alert("searching");
+    searchMarkers();
   } else {
     alert("Error: no active method!");
   }
@@ -213,7 +213,9 @@ function addMarker() {
   // handle description
   var description = document.getElementById("descrInput").value;
 
-  newMarker.bindPopup(getPopUpMessage(typeString, selectedAge, description));
+  newMarker.bindPopup(getPopUpMessage(typeString, selectedAge, description), {
+    autoClose: false,
+  });
 
   saveMarkers();
 }
@@ -286,7 +288,8 @@ async function loadMarkersByLayer(markerLayerGroup, apiEnd, correctIcon) {
         const popupContent = feature.properties.popupContent;
 
         var marker = L.marker(coordinates, { icon: correctIcon }).bindPopup(
-          popupContent.toString()
+          popupContent.toString(),
+          { autoClose: false }
         );
         markerLayerGroup.addLayer(marker);
       })
@@ -306,6 +309,34 @@ function setRandomHeaderImage() {
   } else {
     headerImage.src = "pics/dog.png";
   }
+}
+
+function searchMarkers() {
+  var foundCount = 0;
+  if (map.hasLayer(catMarkers)) {
+    foundCount = foundCount + countAndOpenPopupOnMarkers(catMarkers);
+  }
+  if (map.hasLayer(dogMarkers)) {
+    foundCount = foundCount + countAndOpenPopupOnMarkers(dogMarkers);
+  }
+
+  if (foundCount === 0) {
+    alert("Didnt find any lost pet in this area!");
+  }
+}
+
+function countAndOpenPopupOnMarkers(markerLayerGroup) {
+  var foundCount = 0;
+  markerLayerGroup.eachLayer((marker) => {
+    var distace = interactiveMarker.getLatLng().distanceTo(marker.getLatLng());
+    if (distace < searchCircleRadius) {
+      foundCount++;
+      marker.openPopup();
+    } else {
+      marker.closePopup();
+    }
+  });
+  return foundCount;
 }
 
 // BINDINGS
